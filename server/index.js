@@ -11,13 +11,13 @@ dotenv.load();
 
 const app = module.exports = express();
 
-app.use(cors());
-app.use(morgan(process.env.LOG_FORMAT));
 mongoose.Promise = require('bluebird');
 mongoose.connect(process.env.MONGODB_URI);
-
-
 app.use(require('./routes/page-router.js'));
+app.use(cors());
+app.use(morgan(process.env.LOG_FORMAT));
+
+
 
 
 app.use((err,req,res,next) => {

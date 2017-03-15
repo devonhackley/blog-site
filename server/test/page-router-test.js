@@ -11,11 +11,8 @@ describe('Testing page router', function(){
   describe('Testing POST /api/pages', () => {
     it('should respond with status code 200', (done) => {
       superagent.post(`${baseURL}/api/pages`)
-      .send({
-        title: 'test page',
-        content: 'woooooww content',
-      })
-      .set()
+      .send({})
+      .set('Content-Type', 'application/json')
       .then(res => {
         expect(res.status).to.equal(200);
         expect(res.body.title).to.equal('test page');

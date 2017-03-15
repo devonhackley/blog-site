@@ -4,20 +4,24 @@ const express = require('express');
 const cors = require('cors');
 const morgan = require('morgan');
 const dotenv = require('dotenv');
-// const Promise = require('bluebird');
-// const mongoose = require('mongoose');
-// const debug = require('debug')('blog-site:backserver');
+const mongoose = require('mongoose');
+const debug = require('debug')('blog-site:backserver');
 
 dotenv.load();
 
-// const PORT = process.env.PORT;
 const app = module.exports = express();
 
 app.use(cors());
 app.use(morgan(process.env.LOG_FORMAT));
+mongoose.Promise = require('bluebird');
+mongoose.connect(process.env.MONGODB_URI);
+
+
+app.use(require('./routes/page-router.js'));
 
 
 app.use((err,req,res,next) => {
+  debug('error middleware');
   console.log(err);
   if(err.status){
     return res.sendStatus(err.status);
